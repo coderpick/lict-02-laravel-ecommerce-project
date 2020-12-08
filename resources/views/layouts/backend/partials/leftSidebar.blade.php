@@ -16,7 +16,7 @@
                 <img src="{{ asset('assets/backend/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
 
@@ -26,10 +26,18 @@
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="{{ route('admin.dashboard') }}" class="nav-link">
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link {{ Request::is('admin/dashboard')?'active':'' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
+                        </p>
+                    </a>
+                </li>
+                 <li class="nav-item">
+                    <a href="{{ route('admin.category.index') }}" class="nav-link {{ Request::is('admin/category*')?'active':'' }}">
+                        <i class="nav-icon fas fa-list-alt"></i>
+                        <p>
+                            Category
                         </p>
                     </a>
                 </li>
