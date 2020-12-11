@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="{{ asset('assets/backend/plugins/fontawesome-free/css/all.min.css') }}">
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+@notifyCss
 @stack('css')
 <!-- overlayScrollbars -->
 <link rel="stylesheet" href="{{ asset('assets/backend/dist/css/adminlte.min.css') }}">

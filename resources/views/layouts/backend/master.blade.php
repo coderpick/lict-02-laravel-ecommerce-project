@@ -35,6 +35,7 @@
     </aside>
     <!-- /.control-sidebar -->
 </div>
+@include('notify::messages')
 <!-- ./wrapper -->
 @include('layouts.backend.partials.scripts')
 </body>

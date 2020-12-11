@@ -8,7 +8,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h3 class="card-title">Category create</h3>
+                                <h3 class="card-title">Category Edit</h3>
                             </div>
                             <div class="col-sm-6 text-right">
                                 <a class="btn btn-warning btn-sm" href="{{ route('admin.category.index') }}"><i class="fa fa-reply"></i> Back to List</a>
@@ -17,17 +17,20 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <form action="{{ route('admin.category.store') }}" method="post">
+                        <form action="{{ route('admin.category.update',$category->id) }}" method="post">
                             @csrf
+                            @if(isset($category))
+                                @method('PUT')
+                            @endif
                             <div class="form-group">
                                 <label for="name">Category Name</label>
-                                <input type="text" name="name" id="name" class="form-control" placeholder="Enter category name" value="{{ old('name') }}" required>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Enter category name" value="{{ $category->name??old('name') }}" required>
                                 @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Update</button>
                             </div>
                         </form>
                     </div>
