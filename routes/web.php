@@ -27,4 +27,5 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::group(['as'=>'admin.','prefix'=>'admin/','namespace'=>'Admin','middleware'=>['auth','admin']],function(){
     Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
     Route::resource('category','\App\Http\Controllers\Admin\CategoryController');
+    Route::resource('subcategory','\App\Http\Controllers\Admin\SubCategoryController');
 });

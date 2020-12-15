@@ -8,10 +8,10 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h3 class="card-title">Category List</h3>
+                                <h3 class="card-title">Sub Category List</h3>
                             </div>
                             <div class="col-sm-6 text-right">
-                                <a class="btn btn-primary btn-sm" href="{{ route('admin.category.create') }}"><i class="fa fa-plus-circle"></i> Add New</a>
+                                <a class="btn btn-primary btn-sm" href="{{ route('admin.subcategory.create') }}"><i class="fa fa-plus-circle"></i> Add New</a>
                             </div>
                         </div>
 
@@ -23,19 +23,21 @@
                             <tr>
                                 <th>S/N</th>
                                 <th>Name</th>
+                                <th>Category</th>
                                 <th>Slug</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @forelse($categories as $key => $category)
+                            @forelse($subCategories as $key => $subCategory)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
-                                    <td>{{ $category->name }}</td>
-                                    <td>{{ $category->slug }}</td>
+                                    <td>{{ $subCategory->name }}</td>
+                                    <td>{{ $subCategory->category->name??"" }}</td>
+                                    <td>{{ $subCategory->slug }}</td>
                                     <td>
-                                        @if($category->status ==1)
+                                        @if($subCategory->status ==1)
                                             <span class="badge badge-success">Active</span>
                                         @else
                                             <span class="badge badge-warning">Inactive</span>
@@ -43,13 +45,13 @@
 
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.category.edit',$category->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-pencil-alt"></i></a>
+                                        <a href="{{ route('admin.subcategory.edit',$subCategory->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-pencil-alt"></i></a>
 
-                                        <a onclick="deleteCategory({{ $category->id }})"
+                                        <a onclick="deleteSubCategory({{ $subCategory->id }})"
                                            class="btn btn-danger btn-sm text-white">
                                             <i class="fa fa-trash"></i>
                                         </a>
-                                        <form id="delete-form-{{ $category->id }}" action="{{ route('admin.category.destroy', $category->id) }}"
+                                        <form id="delete-form-{{ $subCategory->id }}" action="{{ route('admin.subcategory.destroy', $subCategory->id) }}"
                                               method="POST" style="display: none;">
                                             @csrf
                                             @method('DELETE')
@@ -58,7 +60,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5">No category found (:</td>
+                                    <td colspan="6">No sub category found (:</td>
                                 </tr>
                             @endforelse
 
@@ -67,6 +69,7 @@
                             <tr>
                                 <th>S/N</th>
                                 <th>Name</th>
+                                <th>Category</th>
                                 <th>Slug</th>
                                 <th>Status</th>
                                 <th>Actions</th>
@@ -117,7 +120,7 @@
             });
         });
         // sweet alert active
-        function deleteCategory(id) {
+        function deleteSubCategory(id) {
                 swal({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
