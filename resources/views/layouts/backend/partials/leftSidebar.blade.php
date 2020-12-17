@@ -49,6 +49,14 @@
                         </p>
                     </a>
                 </li>
+                 <li class="nav-item">
+                    <a href="{{ route('admin.brands.index') }}" class="nav-link {{ Request::is('admin/brands*')?'active':'' }}">
+                        <i class="nav-icon fas fa-list-alt"></i>
+                        <p>
+                            Brands
+                        </p>
+                    </a>
+                </li>
 
             </ul>
         </nav>
