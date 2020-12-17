@@ -29,4 +29,5 @@ Route::group(['as'=>'admin.','prefix'=>'admin/','namespace'=>'Admin','middleware
     Route::resource('category','\App\Http\Controllers\Admin\CategoryController');
     Route::resource('subcategory','\App\Http\Controllers\Admin\SubCategoryController');
     Route::resource('brands','\App\Http\Controllers\Admin\BrandController');
+    Route::resource('products','\App\Http\Controllers\Admin\ProductController');
 });

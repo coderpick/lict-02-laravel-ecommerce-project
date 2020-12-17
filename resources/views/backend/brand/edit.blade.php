@@ -42,7 +42,6 @@
                                         Inactive
                                     </label>
                                 </div>
-
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Update</button>
@@ -59,7 +58,8 @@
 @endsection
 {{-- page css link push--}}
 @push('css')
-
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="{{ asset('assets/backend/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 @endpush
 {{-- page custom css  push--}}
 @push('customCSS')
