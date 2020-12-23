@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AjaxController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -30,4 +32,5 @@ Route::group(['as'=>'admin.','prefix'=>'admin/','namespace'=>'Admin','middleware
     Route::resource('subcategory','\App\Http\Controllers\Admin\SubCategoryController');
     Route::resource('brands','\App\Http\Controllers\Admin\BrandController');
     Route::resource('products','\App\Http\Controllers\Admin\ProductController');
+    Route::get('get-sub-category',[AjaxController::class,'getSubCategory'])->name('getSubCategory');
 });

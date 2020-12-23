@@ -7,11 +7,12 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Traits\CustomHelper;
+use App\Traits\ImageHandler;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    use CustomHelper;
+    use CustomHelper, ImageHandler;
     public function index()
     {
         $products = Product::all();
@@ -27,23 +28,59 @@ class ProductController extends Controller
         return  view('backend.product.create',compact('categories','brands'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request,[
+            'category'=>'required',
+            'sub_category'=>'required',
+            'brand'=>'required',
+            'name'=>'required',
+            'price'=>'required',
+            'total_product'=>'required',
+            'product_detail'=>'required',
+            'image_one'=>'required|mimes:jpg,jpeg,png|max:2024',
+            'image_two'=>'required|mimes:jpg,jpeg,png|max:2024',
+            'image_three'=>'required|mimes:jpg,jpeg,png|max:2024',
+        ]);
+
+        $product = new Product();
+        $product->category_id  =$request->category;
+        $product->sub_category_id  =$request->sub_category;
+        $product->brand_id  =$request->brand;
+        $product->name  =$request->name;
+        $product->slug  = $this->str_slug($request->name);
+        $product->details  =$request->product_detail;
+        $product->features  =$request->product_feature;
+        $product->price  =$request->price;
+        $product->total_product  =$request->total_product;
+        if (isset($request->status)){
+            $product->status =$request->status;
+        }
+        if (isset($request->status)){
+            $product->status =$request->status;
+        }
+        $slug = $this->str_slug($request->name);
+        $imageOne = $request->file( 'image_one' );
+        $this->uploadImage($imageOne,$slug,'product','415','470');
+        $product->image_one = $this->imageName;
+
+        $imageTwo = $request->file( 'image_two' );
+        $this->uploadImage($imageTwo,$slug,'product','415','470');
+        $product->image_two = $this->imageName;
+
+        $imageThree = $request->file( 'image_three' );
+        $this->uploadImage($imageThree,$slug,'product','415','470');
+        $product->image_three = $this->imageName;
+        $product->save();
+        notify()->success('Product Save Successfully ⚡️', 'Product Save');
+        return redirect()->route('admin.products.index');
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Product $product)
     {
         //
