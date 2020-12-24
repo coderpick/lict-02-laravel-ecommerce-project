@@ -8,7 +8,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h3 class="card-title">Product add</h3>
+                                <h3 class="card-title">Product Add</h3>
                             </div>
                             <div class="col-sm-6 text-right">
                                 <a class="btn btn-warning btn-sm" href="{{ route('admin.products.index') }}"><i class="fa fa-reply"></i> Back to List</a>
@@ -105,7 +105,7 @@
                                 <div class="col-md-7">
                                     <div class="form-group">
                                         <label for="product_detail">Product Details <b class="font-weight-bold text-danger">*</b></label>
-                                        <textarea name="product_detail"  id="product_detail" class="form-control summernote">{{ old('product_detail') }}</textarea>
+                                        <textarea name="product_detail"  id="product_detail" class="form-control summernote" required>{{ old('product_detail') }}</textarea>
                                         @error('product_detail')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -206,6 +206,7 @@
                 height:250
             });
 
+
             $('#category').on('change',function(){
                 const categoryId = $(this).val();
                 $.ajax({
@@ -226,6 +227,7 @@
 
                     },
                     error: function(data) {
+                        console.log(data);
                     }
                 })
 
@@ -261,17 +263,6 @@
                     },
                 },
 
-                // errorElement: 'span',
-                // errorPlacement: function (error, element) {
-                //     error.addClass('invalid-feedback');
-                //     element.closest('.form-group').append(error);
-                // },
-                // highlight: function (element, errorClass, validClass) {
-                //     $(element).addClass('is-invalid');
-                // },
-                // unhighlight: function (element, errorClass, validClass) {
-                //     $(element).removeClass('is-invalid');
-                // },
                 submitHandler: function(form) {
                     if (confirm("Are you sure to add this Product?")) {
                         form.submit();

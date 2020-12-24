@@ -83,40 +83,73 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        //
+        return view('backend.product.show',compact('product'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Product $product)
     {
-        //
+        $categories  = Category::all();
+        $brands      = Brand::all();
+        return  view('backend.product.edit',compact('categories','brands','product'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Product $product)
     {
-        //
+        $this->validate($request,[
+            'category'=>'required',
+            'sub_category'=>'required',
+            'brand'=>'required',
+            'name'=>'required',
+            'price'=>'required',
+            'total_product'=>'required',
+            'product_detail'=>'required',
+            'image_one'=>'nullable|mimes:jpg,jpeg,png|max:2024',
+            'image_two'=>'nullable|mimes:jpg,jpeg,png|max:2024',
+            'image_three'=>'nullable|mimes:jpg,jpeg,png|max:2024',
+        ]);
+
+        $product = $product;
+        $product->category_id  =$request->category;
+        $product->sub_category_id  =$request->sub_category;
+        $product->brand_id  =$request->brand;
+        $product->name  =$request->name;
+        $product->slug  = $this->str_slug($request->name);
+        $product->details  =$request->product_detail;
+        $product->features  =$request->product_feature;
+        $product->price  =$request->price;
+        $product->total_product  =$request->total_product;
+        if (isset($request->status)){
+            $product->status =$request->status;
+        }
+        if (isset($request->status)){
+            $product->status =$request->status;
+        }
+        $slug = $this->str_slug($request->name);
+        $imageOne = $request->file( 'image_one' );
+        $this->uploadImage($imageOne,$slug,'product','415','470',null,$product->image_one);
+        $product->image_one = $this->imageName;
+
+        $imageTwo = $request->file( 'image_two' );
+        $this->uploadImage($imageTwo,$slug,'product','415','470',null,$product->image_two);
+        $product->image_two = $this->imageName;
+
+        $imageThree = $request->file( 'image_three' );
+        $this->uploadImage($imageThree,$slug,'product','415','470',null,$product->image_three);
+        $product->image_three = $this->imageName;
+        $product->save();
+        notify()->success('Product Update Successfully ⚡️', 'Product Update');
+        return redirect()->route('admin.products.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Product $product)
     {
-        //
+        $this->deleteImage($product->image_one,'product');
+        $this->deleteImage($product->image_two,'product');
+        $this->deleteImage($product->image_three,'product');
+        $product->delete();
+        notify()->success('Product Delete Successfully ⚡️', 'Product Delete');
+        return redirect()->route('admin.products.index');
     }
 }
